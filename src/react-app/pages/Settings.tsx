@@ -18,6 +18,7 @@ import {
 import Card from '@/react-app/components/Card';
 import Chip from '@/react-app/components/Chip';
 import WhatsAppQRConnect from '@/react-app/components/WhatsAppQRConnect';
+import WhatsAppWebManager from '@/react-app/components/WhatsAppWebManager';
 import MochaIntegrationPanel from '@/react-app/components/MochaIntegrationPanel';
 
 export default function Settings() {
@@ -487,6 +488,16 @@ export default function Settings() {
             alert(`Erro na conexão: ${error}`);
           }}
         />
+      </div>
+
+      {/* WhatsApp Web Integration */}
+      <div>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">WhatsApp Web (Sem API Oficial)</h3>
+        <p className="text-gray-600 mb-6">
+          Conecte seu WhatsApp pessoal usando QR Code, sem precisar da API oficial do WhatsApp Business.
+        </p>
+        
+        <WhatsAppWebManager />
       </div>
 
       {/* Advanced WhatsApp Integration */}

@@ -13,6 +13,7 @@ import {
   type ApiResponse
 } from "../shared/types";
 import whatsappApi from "./whatsapp-api";
+import whatsappWebApi from "./whatsapp-web-api";
 import webhooksApi from "./webhooks";
 
 const app = new Hono<{ Bindings: Env }>();
@@ -31,6 +32,9 @@ app.get("/health", (c) => {
 
 // Mount WhatsApp API routes
 app.route("/api/whatsapp", whatsappApi);
+
+// Mount WhatsApp Web API routes
+app.route("/api", whatsappWebApi);
 
 // Mount Webhook routes
 app.route("/api/webhooks", webhooksApi);
