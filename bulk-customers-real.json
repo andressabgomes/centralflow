@@ -1,0 +1,452 @@
+[
+  {
+    "name": "GUARARAP",
+    "email": "contato@guararap.com.br",
+    "phone": "+55 11 99999-0001",
+    "document": "00111001",
+    "document_type": "Outro",
+    "company_name": "GUARARAP",
+    "notes": "Cliente código: 00111001"
+  },
+  {
+    "name": "CPS CIA. DE",
+    "email": "contato@cpscia.com.br",
+    "phone": "+55 11 99999-0002",
+    "document": "00105003",
+    "document_type": "Outro",
+    "company_name": "CPS CIA. DE",
+    "notes": "Cliente código: 00105003"
+  },
+  {
+    "name": "INDUSTRIAS",
+    "email": "contato@industrias.com.br",
+    "phone": "+55 11 99999-0003",
+    "document": "10205024",
+    "document_type": "Outro",
+    "company_name": "INDUSTRIAS",
+    "notes": "Cliente código: 10205024"
+  },
+  {
+    "name": "CALCADOS",
+    "email": "contato@calcados.com.br",
+    "phone": "+55 11 99999-0004",
+    "document": "10205099",
+    "document_type": "Outro",
+    "company_name": "CALCADOS",
+    "notes": "Cliente código: 10205099"
+  },
+  {
+    "name": "NAYANE IND",
+    "email": "contato@nayaneind.com.br",
+    "phone": "+55 11 99999-0005",
+    "document": "00103006",
+    "document_type": "Outro",
+    "company_name": "NAYANE IND",
+    "notes": "Cliente código: 00103006"
+  },
+  {
+    "name": "DIAMANTES",
+    "email": "contato@diamantes.com.br",
+    "phone": "+55 11 99999-0006",
+    "document": "00000036",
+    "document_type": "Outro",
+    "company_name": "DIAMANTES",
+    "notes": "Cliente código: 00000036"
+  },
+  {
+    "name": "DISTRIBUID",
+    "email": "contato@distribuid.com.br",
+    "phone": "+55 11 99999-0007",
+    "document": "10205094",
+    "document_type": "Outro",
+    "company_name": "DISTRIBUID",
+    "notes": "Cliente código: 10205094"
+  },
+  {
+    "name": "ISOQUIMIC",
+    "email": "contato@isquimic.com.br",
+    "phone": "+55 11 99999-0008",
+    "document": "10205050",
+    "document_type": "Outro",
+    "company_name": "ISOQUIMIC",
+    "notes": "Cliente código: 10205050"
+  },
+  {
+    "name": "EXCELENCIA",
+    "email": "contato@excelencia.com.br",
+    "phone": "+55 11 99999-0009",
+    "document": "10205048",
+    "document_type": "Outro",
+    "company_name": "EXCELENCIA",
+    "notes": "Cliente código: 10205048"
+  },
+  {
+    "name": "ISHASHI DO",
+    "email": "contato@ishashi.com.br",
+    "phone": "+55 11 99999-0010",
+    "document": "10205035",
+    "document_type": "Outro",
+    "company_name": "ISHASHI DO",
+    "notes": "Cliente código: 10205035"
+  },
+  {
+    "name": "MAXIMUM",
+    "email": "contato@maximum.com.br",
+    "phone": "+55 11 99999-0011",
+    "document": "10205062",
+    "document_type": "Outro",
+    "company_name": "MAXIMUM",
+    "notes": "Cliente código: 10205062"
+  },
+  {
+    "name": "HOPE DO N",
+    "email": "contato@hopedon.com.br",
+    "phone": "+55 11 99999-0012",
+    "document": "00104001",
+    "document_type": "Outro",
+    "company_name": "HOPE DO N",
+    "notes": "Cliente código: 00104001"
+  },
+  {
+    "name": "AGUINALDO",
+    "email": "contato@aguinaldo.com.br",
+    "phone": "+55 11 99999-0013",
+    "document": "10205109",
+    "document_type": "Outro",
+    "company_name": "AGUINALDO",
+    "notes": "Cliente código: 10205109"
+  },
+  {
+    "name": "N & S INDU",
+    "email": "contato@nsindu.com.br",
+    "phone": "+55 11 99999-0014",
+    "document": "00104001",
+    "document_type": "Outro",
+    "company_name": "N & S INDU",
+    "notes": "Cliente código: 00104001"
+  },
+  {
+    "name": "CR INDUSTR",
+    "email": "contato@crindustr.com.br",
+    "phone": "+55 11 99999-0015",
+    "document": "00112002",
+    "document_type": "Outro",
+    "company_name": "CR INDUSTR",
+    "notes": "Cliente código: 00112002"
+  },
+  {
+    "name": "KALLIFON E",
+    "email": "contato@kallifon.com.br",
+    "phone": "+55 11 99999-0016",
+    "document": "00104009",
+    "document_type": "Outro",
+    "company_name": "KALLIFON E",
+    "notes": "Cliente código: 00104009"
+  },
+  {
+    "name": "ISM GOMES",
+    "email": "contato@ismgomes.com.br",
+    "phone": "+55 11 99999-0017",
+    "document": "00101028",
+    "document_type": "Outro",
+    "company_name": "ISM GOMES",
+    "notes": "Cliente código: 00101028"
+  },
+  {
+    "name": "THAIS FERR",
+    "email": "contato@thaisferr.com.br",
+    "phone": "+55 11 99999-0018",
+    "document": "00102036",
+    "document_type": "Outro",
+    "company_name": "THAIS FERR",
+    "notes": "Cliente código: 00102036"
+  },
+  {
+    "name": "VECTRA WC",
+    "email": "contato@vectrawc.com.br",
+    "phone": "+55 11 99999-0019",
+    "document": "00104008",
+    "document_type": "Outro",
+    "company_name": "VECTRA WC",
+    "notes": "Cliente código: 00104008"
+  },
+  {
+    "name": "POMAR AGE",
+    "email": "contato@pomarage.com.br",
+    "phone": "+55 11 99999-0020",
+    "document": "10205111",
+    "document_type": "Outro",
+    "company_name": "POMAR AGE",
+    "notes": "Cliente código: 10205111"
+  },
+  {
+    "name": "DILADY SA E",
+    "email": "contato@dilady.com.br",
+    "phone": "+55 11 99999-0021",
+    "document": "00104009",
+    "document_type": "Outro",
+    "company_name": "DILADY SA E",
+    "notes": "Cliente código: 00104009"
+  },
+  {
+    "name": "VAPLAST-I",
+    "email": "contato@vaplasti.com.br",
+    "phone": "+55 11 99999-0022",
+    "document": "10205066",
+    "document_type": "Outro",
+    "company_name": "VAPLAST-I",
+    "notes": "Cliente código: 10205066"
+  },
+  {
+    "name": "EBAZAR.CO",
+    "email": "contato@ebazar.com.br",
+    "phone": "+55 11 99999-0023",
+    "document": "10205095",
+    "document_type": "Outro",
+    "company_name": "EBAZAR.CO",
+    "notes": "Cliente código: 10205095"
+  },
+  {
+    "name": "LOJAS RIAC",
+    "email": "contato@lojasriac.com.br",
+    "phone": "+55 11 99999-0024",
+    "document": "10205108",
+    "document_type": "Outro",
+    "company_name": "LOJAS RIAC",
+    "notes": "Cliente código: 10205108"
+  },
+  {
+    "name": "FLOR DALIA",
+    "email": "contato@flordalia.com.br",
+    "phone": "+55 11 99999-0025",
+    "document": "00105001",
+    "document_type": "Outro",
+    "company_name": "FLOR DALIA",
+    "notes": "Cliente código: 00105001"
+  },
+  {
+    "name": "PRIME LING",
+    "email": "contato@primeling.com.br",
+    "phone": "+55 11 99999-0026",
+    "document": "10205079",
+    "document_type": "Outro",
+    "company_name": "PRIME LING",
+    "notes": "Cliente código: 10205079"
+  },
+  {
+    "name": "ADEL COCO",
+    "email": "contato@adelcoco.com.br",
+    "phone": "+55 11 99999-0027",
+    "document": "00105011",
+    "document_type": "Outro",
+    "company_name": "ADEL COCO",
+    "notes": "Cliente código: 00105011"
+  },
+  {
+    "name": "SOCIEDADE",
+    "email": "contato@sociedade.com.br",
+    "phone": "+55 11 99999-0028",
+    "document": "00104007",
+    "document_type": "Outro",
+    "company_name": "SOCIEDADE",
+    "notes": "Cliente código: 00104007"
+  },
+  {
+    "name": "SAND BEAC",
+    "email": "contato@sandbeac.com.br",
+    "phone": "+55 11 99999-0029",
+    "document": "00104000",
+    "document_type": "Outro",
+    "company_name": "SAND BEAC",
+    "notes": "Cliente código: 00104000"
+  },
+  {
+    "name": "NRS INDUST",
+    "email": "contato@nrsindust.com.br",
+    "phone": "+55 11 99999-0030",
+    "document": "10205113",
+    "document_type": "Outro",
+    "company_name": "NRS INDUST",
+    "notes": "Cliente código: 10205113"
+  },
+  {
+    "name": "BARBARA SE",
+    "email": "contato@barbarase.com.br",
+    "phone": "+55 11 99999-0031",
+    "document": "10205104",
+    "document_type": "Outro",
+    "company_name": "BARBARA SE",
+    "notes": "Cliente código: 10205104"
+  },
+  {
+    "name": "JPS FINA CR",
+    "email": "contato@jpsfinacr.com.br",
+    "phone": "+55 11 99999-0032",
+    "document": "10205107",
+    "document_type": "Outro",
+    "company_name": "JPS FINA CR",
+    "notes": "Cliente código: 10205107"
+  },
+  {
+    "name": "BRASIL MO",
+    "email": "contato@brasilmo.com.br",
+    "phone": "+55 11 99999-0033",
+    "document": "10205070",
+    "document_type": "Outro",
+    "company_name": "BRASIL MO",
+    "notes": "Cliente código: 10205070"
+  },
+  {
+    "name": "EDILSON VI",
+    "email": "contato@edilsonvi.com.br",
+    "phone": "+55 11 99999-0034",
+    "document": "00101032",
+    "document_type": "Outro",
+    "company_name": "EDILSON VI",
+    "notes": "Cliente código: 00101032"
+  },
+  {
+    "name": "SAO CARLO",
+    "email": "contato@saocarlo.com.br",
+    "phone": "+55 11 99999-0035",
+    "document": "10205050",
+    "document_type": "Outro",
+    "company_name": "SAO CARLO",
+    "notes": "Cliente código: 10205050"
+  },
+  {
+    "name": "ALUPAN INI",
+    "email": "contato@alupanini.com.br",
+    "phone": "+55 11 99999-0036",
+    "document": "10205018",
+    "document_type": "Outro",
+    "company_name": "ALUPAN INI",
+    "notes": "Cliente código: 10205018"
+  },
+  {
+    "name": "EMPORIO IN",
+    "email": "contato@emporioin.com.br",
+    "phone": "+55 11 99999-0037",
+    "document": "10205119",
+    "document_type": "Outro",
+    "company_name": "EMPORIO IN",
+    "notes": "Cliente código: 10205119"
+  },
+  {
+    "name": "VIA VIP CAL",
+    "email": "contato@viavipcal.com.br",
+    "phone": "+55 11 99999-0038",
+    "document": "10205111",
+    "document_type": "Outro",
+    "company_name": "VIA VIP CAL",
+    "notes": "Cliente código: 10205111"
+  },
+  {
+    "name": "J B AMARO",
+    "email": "contato@jbamaro.com.br",
+    "phone": "+55 11 99999-0039",
+    "document": "10205104",
+    "document_type": "Outro",
+    "company_name": "J B AMARO",
+    "notes": "Cliente código: 10205104"
+  },
+  {
+    "name": "UNIMED FO",
+    "email": "contato@unimedfo.com.br",
+    "phone": "+55 11 99999-0040",
+    "document": "00109000",
+    "document_type": "Outro",
+    "company_name": "UNIMED FO",
+    "notes": "Cliente código: 00109000"
+  },
+  {
+    "name": "ALUMINIO",
+    "email": "contato@aluminio.com.br",
+    "phone": "+55 11 99999-0041",
+    "document": "00105014",
+    "document_type": "Outro",
+    "company_name": "ALUMINIO",
+    "notes": "Cliente código: 00105014"
+  },
+  {
+    "name": "T DISTRIBU",
+    "email": "contato@tdistribu.com.br",
+    "phone": "+55 11 99999-0042",
+    "document": "10205071",
+    "document_type": "Outro",
+    "company_name": "T DISTRIBU",
+    "notes": "Cliente código: 10205071"
+  },
+  {
+    "name": "BINO'S INDI",
+    "email": "contato@binosindi.com.br",
+    "phone": "+55 11 99999-0043",
+    "document": "10205100",
+    "document_type": "Outro",
+    "company_name": "BINO'S INDI",
+    "notes": "Cliente código: 10205100"
+  },
+  {
+    "name": "NOVA FIACA",
+    "email": "contato@novafiaca.com.br",
+    "phone": "+55 11 99999-0044",
+    "document": "00105014",
+    "document_type": "Outro",
+    "company_name": "NOVA FIACA",
+    "notes": "Cliente código: 00105014"
+  },
+  {
+    "name": "COMPANHI",
+    "email": "contato@companhi.com.br",
+    "phone": "+55 11 99999-0045",
+    "document": "10205099",
+    "document_type": "Outro",
+    "company_name": "COMPANHI",
+    "notes": "Cliente código: 10205099"
+  },
+  {
+    "name": "MARBELLE",
+    "email": "contato@marbelle.com.br",
+    "phone": "+55 11 99999-0046",
+    "document": "10205024",
+    "document_type": "Outro",
+    "company_name": "MARBELLE",
+    "notes": "Cliente código: 10205024"
+  },
+  {
+    "name": "N F VALE IN",
+    "email": "contato@nfvalein.com.br",
+    "phone": "+55 11 99999-0047",
+    "document": "10205072",
+    "document_type": "Outro",
+    "company_name": "N F VALE IN",
+    "notes": "Cliente código: 10205072"
+  },
+  {
+    "name": "MARIA DA F",
+    "email": "contato@mariadaf.com.br",
+    "phone": "+55 11 99999-0048",
+    "document": "10205082",
+    "document_type": "Outro",
+    "company_name": "MARIA DA F",
+    "notes": "Cliente código: 10205082"
+  },
+  {
+    "name": "L S B INDUS",
+    "email": "contato@lsbindus.com.br",
+    "phone": "+55 11 99999-0049",
+    "document": "00105003",
+    "document_type": "Outro",
+    "company_name": "L S B INDUS",
+    "notes": "Cliente código: 00105003"
+  },
+  {
+    "name": "TORQUATO",
+    "email": "contato@torquato.com.br",
+    "phone": "+55 11 99999-0050",
+    "document": "00102043",
+    "document_type": "Outro",
+    "company_name": "TORQUATO",
+    "notes": "Cliente código: 00102043"
+  }
+]
