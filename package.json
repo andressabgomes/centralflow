@@ -41,6 +41,7 @@
     "type-check": "tsc --noEmit",
     "wrangler:dev": "wrangler dev --local",
     "wrangler:deploy": "wrangler deploy",
-    "wrangler:tail": "wrangler tail"
+    "wrangler:tail": "wrangler tail",
+    "setup:domain": "node scripts/setup-domain.js"
   }
 }

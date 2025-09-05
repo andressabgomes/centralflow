@@ -220,6 +220,24 @@ npx wrangler d1 execute centralflow-db --remote --file=./migrations/9.sql
 - **Status**: ✅ Sucesso
 - **URL**: https://019911ce-cd37-7321-803c-5c193c44d1a9.andressagomes-adm.workers.dev
 
+## 🌐 Domínio Personalizado
+
+**Domínio**: `cajait.shop`  
+**Status**: ⏳ Aguardando configuração DNS  
+**Worker**: `centralflow`  
+**Rota**: `cajait.shop/*`
+
+### Configuração DNS
+- ✅ Worker deployado com rota configurada
+- ⏳ Aguardando alteração de nameservers na Hostinger
+- ⏳ Aguardando adição do domínio no Cloudflare
+- ⏳ Aguardando propagação DNS (24-48h)
+
+### URLs Finais (após configuração)
+- **Site Principal**: https://cajait.shop
+- **API Base**: https://cajait.shop/api
+- **Health Check**: https://cajait.shop/health
+
 ## 📁 Estrutura do Projeto
 
 ```

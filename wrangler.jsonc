@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "019911ce-cd37-7321-803c-5c193c44d1a9",
+  "name": "centralflow",
   "main": "./src/worker/index.ts",
   "compatibility_date": "2025-06-17",
   "compatibility_flags": ["nodejs_compat"],
@@ -19,4 +19,10 @@
       "database_id": "460b733b-8b69-4317-965e-1103e3ffc0c0",
     },
   ],
+  "routes": [
+    {
+      "pattern": "cajait.shop/*",
+      "zone_name": "cajait.shop"
+    }
+  ]
 }

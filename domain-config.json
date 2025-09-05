@@ -1,0 +1,48 @@
+{
+  "domain": "cajait.shop",
+  "subdomain": "app",
+  "cloudflare": {
+    "account_id": "0fcf859333ab748f1f4412f3d496cc99",
+    "worker_name": "centralflow",
+    "current_url": "https://019911ce-cd37-7321-803c-5c193c44d1a9.andressagomes-adm.workers.dev"
+  },
+  "dns_records": {
+    "required": [
+      {
+        "type": "A",
+        "name": "@",
+        "content": "192.0.2.1",
+        "proxy": true,
+        "description": "Registro principal do domínio"
+      },
+      {
+        "type": "CNAME",
+        "name": "www",
+        "content": "meudominio.com.br",
+        "proxy": true,
+        "description": "Subdomínio www"
+      }
+    ],
+    "optional": [
+      {
+        "type": "CNAME",
+        "name": "app",
+        "content": "019911ce-cd37-7321-803c-5c193c44d1a9.andressagomes-adm.workers.dev",
+        "proxy": true,
+        "description": "Subdomínio app (alternativa)"
+      }
+    ]
+  },
+  "worker_routes": {
+    "pattern": "cajait.shop/*",
+    "zone_name": "cajait.shop"
+  },
+  "ssl": {
+    "mode": "full",
+    "always_use_https": true,
+    "hsts": true
+  },
+  "status": "pending",
+  "created_at": "2025-09-05T19:00:00Z",
+  "updated_at": "2025-09-05T19:00:00Z"
+}
