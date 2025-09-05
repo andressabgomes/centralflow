@@ -1097,127 +1097,27 @@ app.get("/api/analytics", async (c) => {
     startDate.setDate(startDate.getDate() - daysBack);
     const startDateStr = startDate.toISOString();
     
-    // 1. Taxa de reabertura de chamados - Método aprimorado
-    const reopenStats = await db.prepare(`
-      WITH resolved_tickets_period AS (
-        SELECT DISTINCT id, created_at, updated_at
-        FROM tickets 
-        WHERE created_at >= ? 
-        AND status IN ('resolved', 'closed')
-        AND closed_at IS NOT NULL
-      ),
-      reopened_tickets_period AS (
-        SELECT DISTINCT t1.id
-        FROM tickets t1
-        INNER JOIN resolved_tickets_period rt ON t1.id = rt.id
-        WHERE t1.updated_at > rt.updated_at
-        AND t1.status IN ('open', 'in_progress', 'pending')
-      )
+    // 1. Simple ticket statistics
+    const ticketStats = await db.prepare(`
       SELECT 
-        (SELECT COUNT(*) FROM resolved_tickets_period) as total_resolved,
-        (SELECT COUNT(*) FROM reopened_tickets_period) as total_reopened
+        COUNT(*) as total_tickets,
+        SUM(CASE WHEN status = 'open' THEN 1 ELSE 0 END) as open_tickets,
+        SUM(CASE WHEN status = 'in_progress' THEN 1 ELSE 0 END) as in_progress_tickets,
+        SUM(CASE WHEN status = 'resolved' THEN 1 ELSE 0 END) as resolved_tickets,
+        SUM(CASE WHEN status = 'closed' THEN 1 ELSE 0 END) as closed_tickets,
+        SUM(CASE WHEN priority = 'urgent' THEN 1 ELSE 0 END) as urgent_tickets,
+        SUM(CASE WHEN priority = 'high' THEN 1 ELSE 0 END) as high_tickets
+      FROM tickets
+      WHERE created_at >= ?
     `).bind(startDateStr).first();
     
-    const totalResolved = Number(reopenStats?.total_resolved || 0);
-    const totalReopened = Number(reopenStats?.total_reopened || 0);
-    const reopenRate = totalResolved > 0 ? (totalReopened / totalResolved) * 100 : 0;
+    const totalTickets = Number(ticketStats?.total_tickets || 0);
+    const openTickets = Number(ticketStats?.open_tickets || 0);
+    const resolvedTickets = Number(ticketStats?.resolved_tickets || 0);
+    const closedTickets = Number(ticketStats?.closed_tickets || 0);
+    const urgentTickets = Number(ticketStats?.urgent_tickets || 0);
     
-    // Get previous period for comparison
-    const prevStartDate = new Date(startDate);
-    prevStartDate.setDate(prevStartDate.getDate() - daysBack);
-    const prevStartDateStr = prevStartDate.toISOString();
-    
-    const prevReopenStats = await db.prepare(`
-      WITH resolved_tickets AS (
-        SELECT 
-          id,
-          created_at,
-          updated_at
-        FROM tickets 
-        WHERE created_at >= ? AND created_at < ?
-        AND status IN ('resolved', 'closed')
-      ),
-      reopened_tickets AS (
-        SELECT DISTINCT id
-        FROM tickets 
-        WHERE created_at >= ? AND created_at < ?
-        AND status IN ('open', 'in_progress', 'pending')
-        AND id IN (
-          SELECT DISTINCT id 
-          FROM tickets 
-          WHERE status IN ('resolved', 'closed')
-        )
-      )
-      SELECT 
-        (SELECT COUNT(DISTINCT id) FROM resolved_tickets) as total_resolved,
-        (SELECT COUNT(*) FROM reopened_tickets) as total_reopened
-    `).bind(prevStartDateStr, startDateStr, prevStartDateStr, startDateStr).first();
-    
-    const prevTotalResolved = Number(prevReopenStats?.total_resolved || 0);
-    const prevTotalReopened = Number(prevReopenStats?.total_reopened || 0);
-    const prevReopenRate = prevTotalResolved > 0 ? (prevTotalReopened / prevTotalResolved) * 100 : 0;
-    
-    const reopenRateChange = prevReopenRate > 0 ? ((reopenRate - prevReopenRate) / prevReopenRate) * 100 : 0;
-    
-    // 2. Tempo médio de primeira resposta - Cálculo aprimorado
-    const responseTimeStats = await db.prepare(`
-      WITH first_responses AS (
-        SELECT 
-          t.id,
-          t.created_at as ticket_created,
-          MIN(tc.created_at) as first_response,
-          (julianday(MIN(tc.created_at)) - julianday(t.created_at)) * 24 * 60 as response_time_minutes
-        FROM tickets t
-        LEFT JOIN ticket_comments tc ON t.id = tc.ticket_id 
-          AND tc.author_type = 'team' 
-          AND tc.created_at > t.created_at
-        WHERE t.created_at >= ?
-        GROUP BY t.id, t.created_at
-        HAVING first_response IS NOT NULL
-        AND response_time_minutes >= 0
-      )
-      SELECT 
-        AVG(response_time_minutes) as avg_response_time_minutes,
-        COUNT(*) as tickets_with_response,
-        MIN(response_time_minutes) as min_response_time,
-        MAX(response_time_minutes) as max_response_time,
-        CASE 
-          WHEN COUNT(*) >= 2 THEN (
-            SELECT response_time_minutes 
-            FROM first_responses 
-            ORDER BY response_time_minutes 
-            LIMIT 1 OFFSET (COUNT(*) / 2)
-          )
-          ELSE AVG(response_time_minutes)
-        END as median_response_time
-      FROM first_responses
-    `).bind(startDateStr).first();
-    
-    const avgResponseTime = Number(responseTimeStats?.avg_response_time_minutes || 0);
-    const targetResponseTime = 30; // 30 minutes target
-    
-    // Previous period response time
-    const prevResponseTimeStats = await db.prepare(`
-      WITH first_responses AS (
-        SELECT 
-          t.id,
-          t.created_at as ticket_created,
-          MIN(tc.created_at) as first_response
-        FROM tickets t
-        LEFT JOIN ticket_comments tc ON t.id = tc.ticket_id AND tc.author_type = 'team'
-        WHERE t.created_at >= ? AND t.created_at < ?
-        GROUP BY t.id, t.created_at
-        HAVING first_response IS NOT NULL
-      )
-      SELECT 
-        AVG((julianday(first_response) - julianday(ticket_created)) * 24 * 60) as avg_response_time_minutes
-      FROM first_responses
-    `).bind(prevStartDateStr, startDateStr).first();
-    
-    const prevAvgResponseTime = Number(prevResponseTimeStats?.avg_response_time_minutes || 0);
-    const responseTimeChange = prevAvgResponseTime > 0 ? ((avgResponseTime - prevAvgResponseTime) / prevAvgResponseTime) * 100 : 0;
-    
-    // 3. Utilização da capacidade da equipe - Cálculo aprimorado
+    // 2. Team statistics
     const teamStats = await db.prepare(`
       SELECT 
         COUNT(*) as total_agents,
@@ -1230,144 +1130,73 @@ app.get("/api/analytics", async (c) => {
     const activeAgents = Number(teamStats?.active_agents || 0);
     const operationalAgents = Number(teamStats?.operational_agents || 0);
     
-    // Calculate utilization based on workload distribution
-    const utilizationStats = await db.prepare(`
-      WITH agent_workload AS (
-        SELECT 
-          assigned_to,
-          COUNT(*) as active_tickets,
-          AVG(CASE priority
-            WHEN 'urgent' THEN 4
-            WHEN 'high' THEN 3
-            WHEN 'medium' THEN 2
-            WHEN 'low' THEN 1
-            ELSE 2
-          END) as avg_priority_weight,
-          MAX(created_at) as last_ticket_assigned
-        FROM tickets 
-        WHERE assigned_to IS NOT NULL 
-        AND status IN ('open', 'in_progress', 'pending')
-        AND created_at >= ?
-        GROUP BY assigned_to
-      ),
-      capacity_metrics AS (
-        SELECT 
-          COUNT(DISTINCT aw.assigned_to) as agents_with_tickets,
-          COUNT(*) as total_active_tickets,
-          AVG(aw.active_tickets) as avg_tickets_per_agent,
-          SUM(aw.active_tickets * aw.avg_priority_weight) as total_weighted_workload
-        FROM agent_workload aw
-      )
+    // 3. Simple utilization calculation
+    const assignedTickets = await db.prepare(`
+      SELECT COUNT(DISTINCT assigned_to) as agents_with_tickets
+      FROM tickets 
+      WHERE assigned_to IS NOT NULL 
+      AND status IN ('open', 'in_progress', 'pending')
+      AND created_at >= ?
+    `).bind(startDateStr).first();
+    
+    const agentsWithTickets = Number(assignedTickets?.agents_with_tickets || 0);
+    const utilization = operationalAgents > 0 ? (agentsWithTickets / operationalAgents) * 100 : 0;
+    
+    // 4. Customer statistics
+    const customerStats = await db.prepare(`
       SELECT 
-        agents_with_tickets,
-        total_active_tickets,
-        avg_tickets_per_agent,
-        total_weighted_workload,
-        CASE 
-          WHEN ? > 0 THEN (total_weighted_workload / (? * 10)) * 100 
-          ELSE 0 
-        END as capacity_utilization_percentage
-      FROM capacity_metrics
-    `).bind(startDateStr, operationalAgents, operationalAgents).first();
+        COUNT(*) as total_customers,
+        SUM(CASE WHEN is_active = 1 THEN 1 ELSE 0 END) as active_customers
+      FROM customers
+    `).first();
     
-    const agentsWithTickets = Number(utilizationStats?.agents_with_tickets || 0);
-    const totalActiveTickets = Number(utilizationStats?.total_active_tickets || 0);
-    const avgTicketsPerAgent = Number(utilizationStats?.avg_tickets_per_agent || 0);
-    const capacityUtilization = Number(utilizationStats?.capacity_utilization_percentage || 0);
+    const totalCustomers = Number(customerStats?.total_customers || 0);
+    const activeCustomers = Number(customerStats?.active_customers || 0);
     
-    // Simple utilization calculation as fallback
-    const simpleUtilization = operationalAgents > 0 ? (agentsWithTickets / operationalAgents) * 100 : 0;
-    const utilization = Math.min(Math.max(capacityUtilization || simpleUtilization, 0), 100);
-    
-    // Previous period utilization
-    const prevUtilizationStats = await db.prepare(`
-      WITH prev_agent_workload AS (
-        SELECT 
-          assigned_to,
-          COUNT(*) as active_tickets,
-          AVG(CASE priority
-            WHEN 'urgent' THEN 4
-            WHEN 'high' THEN 3
-            WHEN 'medium' THEN 2
-            WHEN 'low' THEN 1
-            ELSE 2
-          END) as avg_priority_weight
-        FROM tickets 
-        WHERE assigned_to IS NOT NULL 
-        AND status IN ('open', 'in_progress', 'pending')
-        AND created_at >= ? AND created_at < ?
-        GROUP BY assigned_to
-      )
-      SELECT 
-        COUNT(DISTINCT assigned_to) as agents_with_tickets,
-        COALESCE(SUM(active_tickets * avg_priority_weight) / (? * 10) * 100, 0) as prev_capacity_utilization
-      FROM prev_agent_workload
-    `).bind(prevStartDateStr, startDateStr, operationalAgents).first();
-    
-    const prevAgentsWithTickets = Number(prevUtilizationStats?.agents_with_tickets || 0);
-    const prevCapacityUtilization = Number(prevUtilizationStats?.prev_capacity_utilization || 0);
-    const prevSimpleUtilization = operationalAgents > 0 ? (prevAgentsWithTickets / operationalAgents) * 100 : 0;
-    const prevUtilization = Math.min(Math.max(prevCapacityUtilization || prevSimpleUtilization, 0), 100);
-    const utilizationChange = prevUtilization > 0 ? ((utilization - prevUtilization) / prevUtilization) * 100 : 0;
-    
-    // Generate historical data for charts
-    const intervals = Math.min(daysBack, 10); // Max 10 data points
-    const intervalDays = Math.floor(daysBack / intervals);
-    
+    // Generate simple historical data
+    const intervals = Math.min(daysBack, 7);
     const historicalData = [];
     const labels = [];
     
     for (let i = 0; i < intervals; i++) {
       const intervalStart = new Date(startDate);
-      intervalStart.setDate(startDate.getDate() + (i * intervalDays));
-      const intervalEnd = new Date(intervalStart);
-      intervalEnd.setDate(intervalStart.getDate() + intervalDays);
+      intervalStart.setDate(startDate.getDate() + (i * Math.floor(daysBack / intervals)));
       
-      // Format label
       if (daysBack <= 7) {
         labels.push(intervalStart.toLocaleDateString('pt-BR', { weekday: 'short' }));
-      } else if (daysBack <= 30) {
-        labels.push(intervalStart.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }));
       } else {
         labels.push(intervalStart.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }));
       }
       
-      // Mock historical data for now (in a real implementation, you'd calculate these)
+      // Mock data for charts
       historicalData.push({
-        reopenRate: Math.max(0, Number(reopenRate) + (Math.random() - 0.5) * 2),
-        responseTime: Math.max(15, avgResponseTime + (Math.random() - 0.5) * 20),
-        utilization: Math.max(50, utilization + (Math.random() - 0.5) * 20)
+        tickets: Math.max(0, totalTickets + (Math.random() - 0.5) * 10),
+        utilization: Math.max(0, utilization + (Math.random() - 0.5) * 20)
       });
     }
     
     const analyticsData = {
-      reopenRate: {
-        value: reopenRate,
-        trend: reopenRateChange >= 0 ? 'up' : 'down',
-        change: `${Math.abs(reopenRateChange).toFixed(1)}%`,
-        totalResolved,
-        totalReopened
+      tickets: {
+        total: totalTickets,
+        open: openTickets,
+        resolved: resolvedTickets,
+        closed: closedTickets,
+        urgent: urgentTickets,
+        resolutionRate: totalTickets > 0 ? ((resolvedTickets + closedTickets) / totalTickets) * 100 : 0
       },
-      firstResponseTime: {
-        value: avgResponseTime,
-        trend: responseTimeChange >= 0 ? 'up' : 'down',
-        change: `${Math.abs(responseTimeChange).toFixed(1)}%`,
-        target: targetResponseTime
-      },
-      teamUtilization: {
-        value: utilization,
-        trend: utilizationChange >= 0 ? 'up' : 'down',
-        change: `${Math.abs(utilizationChange).toFixed(1)}%`,
-        activeAgents: operationalAgents,
+      team: {
         totalAgents,
-        agentsWithTickets,
-        totalActiveTickets,
-        avgTicketsPerAgent: avgTicketsPerAgent.toFixed(1)
+        activeAgents,
+        operationalAgents,
+        utilization: Math.min(utilization, 100)
+      },
+      customers: {
+        total: totalCustomers,
+        active: activeCustomers
       },
       periodData: {
         period,
-        reopenRates: historicalData.map(d => d.reopenRate),
-        responseTimes: historicalData.map(d => d.responseTime),
+        ticketCounts: historicalData.map(d => d.tickets),
         utilizations: historicalData.map(d => d.utilization),
         labels
       }

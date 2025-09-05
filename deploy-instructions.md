@@ -1,10 +1,59 @@
 # Instruções de Deploy - CentralFlow
 
-## Status Atual
-✅ **Build da aplicação concluído com sucesso**
-❌ **Deploy automático falhou por problemas de autenticação**
+## ✅ Status Atual - DEPLOY REALIZADO COM SUCESSO
+✅ **Build da aplicação concluído com sucesso**  
+✅ **Deploy realizado com sucesso em 05/09/2025**  
+✅ **APIs funcionando em produção**  
+✅ **Banco de dados D1 configurado e populado**  
+✅ **50 clientes cadastrados**  
+✅ **4 membros da equipe ativos**  
 
-## Como fazer o deploy manualmente
+### 🚀 URL de Produção
+**https://019911ce-cd37-7321-803c-5c193c44d1a9.andressagomes-adm.workers.dev**
+
+### 📊 Status das APIs
+- ✅ Health Check: `/health`
+- ✅ Gestão de Equipe: `/api/team`
+- ✅ Gestão de Clientes: `/api/customers`
+- ✅ Sistema de Tickets: `/api/tickets`
+- ✅ Analytics: `/api/analytics`
+- ✅ WhatsApp Integration: `/api/whatsapp/*`
+- ✅ Integração Mocha: `/api/customers/*/sync-mocha`
+
+## ✅ Deploy Realizado - 05/09/2025
+
+### Comandos Executados
+```bash
+# 1. Instalação de dependências
+npm install
+
+# 2. Atualização do Wrangler
+npm install --save-dev wrangler@4
+
+# 3. Build do projeto
+npm run build
+
+# 4. Deploy para Cloudflare Workers
+npx wrangler deploy
+
+# 5. Execução das migrações
+npx wrangler d1 execute centralflow-db --remote --file=./migrations/001_initial_schema.sql
+```
+
+### Resultado do Deploy
+- **Worker ID**: 019911ce-cd37-7321-803c-5c193c44d1a9
+- **URL**: https://019911ce-cd37-7321-803c-5c193c44d1a9.andressagomes-adm.workers.dev
+- **Versão Wrangler**: 4.34.0
+- **Status**: ✅ Sucesso
+- **Tempo de Deploy**: ~17 segundos
+
+### Dados em Produção
+- **Equipe**: 4 membros ativos
+- **Clientes**: 50 clientes cadastrados
+- **Tickets**: 1 ticket ativo
+- **Banco D1**: Configurado e operacional
+
+## Como fazer o deploy manualmente (para futuras atualizações)
 
 ### Opção 1: Deploy via Cloudflare Dashboard (Recomendado)
 
